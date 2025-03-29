@@ -1,5 +1,5 @@
 # Yummalyzer
-### What the ***BITE***?!
+### What the ***BITE?!***
 [ProfHacks 2025 Project](https://devpost.com/software/yummalyzer-food-analyzer)
 
 ---
