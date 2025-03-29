@@ -1,5 +1,3 @@
-![logo of Yummalyzer]([https://ibb.co/QFYWmmXp](https://i.ibb.co/HDGcggXB/yummalyzer.png))
-
 # Yummalyzer
 ### What the ***BITE***?!
 [ProfHacks 2025 Project](https://devpost.com/software/yummalyzer-food-analyzer)
