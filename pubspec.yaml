@@ -31,6 +31,10 @@ dependencies:
   flutter:
     sdk: flutter
   
+  #gemini api stuff
+  flutter_dotenv: ^5.1.0
+  http: ^0.13.6
+
   image_picker: ^1.1.2
 
   # The following adds the Cupertino Icons font to your application.
