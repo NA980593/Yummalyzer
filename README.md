@@ -1,5 +1,4 @@
-# Yummalyzer
-### What the BITE??
+# Yummalyzer<sub> What the BITE?? </sub>
 [ProfHacks 2025 Project](https://devpost.com/software/yummalyzer-food-analyzer)
 
 [**Yummalyzer**](https://devpost.com/software/yummalyzer-food-analyzer) is a Flutter based Android application designed to analyze food images and provide detailed nutritional insights. By leveraging Google's Gemini API, Yummalyzer helps users understand their meals by identifying food types, calorie content and nutritional values.
