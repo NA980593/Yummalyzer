@@ -1,4 +1,4 @@
-![logo of Yummalyzer](https://ibb.co/QFYWmmXp)
+![logo of Yummalyzer]([https://ibb.co/QFYWmmXp](https://i.ibb.co/HDGcggXB/yummalyzer.png))
 
 # Yummalyzer
 ### What the ***BITE***?!
