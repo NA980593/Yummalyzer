@@ -34,12 +34,16 @@ class _TrackerScreenState extends State<TrackerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xff393E46),
       appBar: AppBar(
         backgroundColor: Colors.orangeAccent,
         centerTitle: true,
         title: Text(widget.title),
       ),
-      body: Text(x.toString()),
+      body: Text(
+        x.toString(),
+        style: Theme.of(context).textTheme.bodyMedium,
+        ),
     );
   }
 }
