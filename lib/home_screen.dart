@@ -3,6 +3,7 @@ import 'package:yummalyzer/food_parser.dart';
 import 'package:yummalyzer/food_data_manager.dart';
 import 'package:yummalyzer/services/food_analyzer.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:yummalyzer/tracker_screen.dart';
 import 'dart:io';
 
 class HomeScreen extends StatefulWidget {
@@ -290,77 +291,14 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: _buildActionButton(
                                 context,
                                 onPressed: () {
-                                  foodDataManager.loadAllEntries().then((
-                                    entries,
-                                  ) {
-                                    showDialog(
-                                      context: context,
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
                                       builder:
-                                          (context) => AlertDialog(
-                                            backgroundColor: const Color(
-                                              0xff393E46,
-                                            ),
-                                            title: Text(
-                                              'Saved Entries',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .headlineMedium
-                                                  ?.copyWith(
-                                                    color: const Color(
-                                                      0xff00ADB5,
-                                                    ),
-                                                  ),
-                                            ),
-                                            content: SizedBox(
-                                              width: double.maxFinite,
-                                              child: ListView.builder(
-                                                shrinkWrap: true,
-                                                itemCount: entries.length,
-                                                itemBuilder: (context, index) {
-                                                  return Card(
-                                                    color: const Color(
-                                                      0xff222831,
-                                                    ),
-                                                    margin:
-                                                        const EdgeInsets.only(
-                                                          bottom: 8,
-                                                        ),
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                            8.0,
-                                                          ),
-                                                      child: Text(
-                                                        entries[index]
-                                                            .toString(),
-                                                        style:
-                                                            Theme.of(context)
-                                                                .textTheme
-                                                                .bodyMedium,
-                                                      ),
-                                                    ),
-                                                  );
-                                                },
-                                              ),
-                                            ),
-                                            actions: [
-                                              TextButton(
-                                                onPressed:
-                                                    () =>
-                                                        Navigator.pop(context),
-                                                child: Text(
-                                                  'Close',
-                                                  style: TextStyle(
-                                                    color: const Color(
-                                                      0xff00ADB5,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                    );
-                                  });
+                                          (context) =>
+                                              TrackerScreen(title: 'Tracker'),
+                                    ),
+                                  );
                                 },
                                 icon: Icons.history,
                                 label: 'Tracker',
