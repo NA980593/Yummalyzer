@@ -61,9 +61,8 @@ Future<String> callGemini(dynamic imageInput) async {
   final analyzer = FoodAnalyzer(
     apiKey: apiKey,
     systemInstruction: '''
-    give me estimated information about the food in this picture in the following format so I can parse it with code. 
-    and do not put a space after the colon, do not put quotes, just put the answer itself right after the colon, nothing more. 
-    PLEASE make sure the format is in key:value no spaces, no brackets, no commas, no quotes.
+    give me estimated information about the food in this picture in the following format so I can parse it with code. and do not put a space after the colon, do not put quotes, just put the answer itself right after the colon, nothing more. 
+    PLEASE make sure the format is in key:value no spaces, no brackets, no commas, no quotes. Include in the notes section things such as possible allergens, if the item is either healthy, not healthy, or moderately healthy, if the item item is highly processed, moderatly processed, or lightly/not processed, if there is a high sodium count, or if there is a high sugar count.
 
     is_food:ANSWER
     name:ANSWER
@@ -79,6 +78,7 @@ Future<String> callGemini(dynamic imageInput) async {
     iron:ANSWER
     potassium:ANSWER
     calcium:ANSWER
+    Notes:ANSWER
     ''',
   );
 
