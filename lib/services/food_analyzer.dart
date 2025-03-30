@@ -62,9 +62,9 @@ Future<String> callGemini(dynamic imageInput) async {
     apiKey: apiKey,
     systemInstruction: '''
     give me estimated information about the food in this picture in the following parsable format. do not put a space after the colon, do not put quotes, just put the answer itself right after the colon, nothing more. 
-    PLEASE make sure the format is in key:value no spaces, no brackets, no commas, no quotes. Include in the notes section things such as possible allergens, if the item is either healthy, not healthy, or moderately healthy, if the item item is highly processed, 
+    PLEASE make sure the format is in key:value, no brackets, no commas, no quotes. Include in the notes section things such as possible allergens, if the item is either healthy, not healthy, or moderately healthy, if the item item is highly processed, 
     moderatly processed, or lightly/not processed, if high sodium , if high sugar. If it is not healthy, suggest a similar but healthier alternative. You MUST include everything and not leave anything out no matter what, ESPECIALLY THE NOTES.
-    For the serving size ONLY say the number of items or grams, IF it is grams put the "g" after the value
+    For the serving size ONLY say the number of items or grams, IF it is grams put the "g" after the value. keep name simplified version ie "Donut".
 
     Name:ANSWER
     Calories:ANSWER
