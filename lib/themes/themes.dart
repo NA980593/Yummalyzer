@@ -12,6 +12,7 @@ class themes {
       bodyMedium: TextStyle(
         fontFamily: 'Germagont',
         fontSize: 14.0,
+        color: Color(0xffEEEEEE)
       ),
 
       headlineLarge: TextStyle(
@@ -28,7 +29,7 @@ class themes {
     ),
 
     appBarTheme: AppBarTheme(
-      iconTheme: IconThemeData(color: Colors.orangeAccent),
+      iconTheme: IconThemeData(color: Color(0xff00ADB5)),
     ),
 
     inputDecorationTheme: InputDecorationTheme(

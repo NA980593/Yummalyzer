@@ -59,111 +59,145 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xff222831),
       appBar: AppBar(
         leading: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Image.asset(
-            'assets/images/yummlogo.png',
+            'assets/images/yummalyzer_logo.png',
             fit: BoxFit.contain,
           ),
         ),
-        backgroundColor: Colors.orangeAccent,
+        backgroundColor: Color(0xff00ADB5),
         centerTitle: true,
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Column(
-              children:
-                  _map.entries
-                      .map((e) => Text("${e.key}: ${e.value}"))
-                      .toList(),
-            ),
-            ElevatedButton(
-              onPressed:
-                  _selectedImage != null
-                      ? () {
-                        callGemini(_selectedImage!).then((result) {
-                          updateMap(FoodParser.parseFoodString(result));
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Column(
+                children:
+                    _map.entries
+                        .map((e) => Text("${e.key}: ${e.value}"))
+                        .toList(),
+              ),
+              ElevatedButton(
+                onPressed:
+                    _selectedImage != null
+                        ? () {
+                          callGemini(_selectedImage!).then((result) {
+                            updateMap(FoodParser.parseFoodString(result));
+                          });
+                        }
+                        : null,
+                
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xff393E46),
+                ),
+
+                child: Text(
+                  'Yummalyze!',
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+                
+              ),
+              SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        _getImageFromCamera();
+                      },
+
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xff393E46),
+                      ),
+
+                      child: Text(
+                        'Get From Camera',
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        _getImageFromGallery();
+                      },
+
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xff393E46),
+                      ),
+
+                      child: Text(
+                        'Get From Gallery',
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        updateMap({
+                          'name': 'Alice',
+                          'age': '30',
+                          'city': 'New York',
                         });
-                      }
-                      : null,
-              child: Text(
-                'Yummalyze!',
-                style: Theme.of(context).textTheme.bodyMedium,
+                      },
+
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xff393E46),
+                      ),
+
+                      child: Text(
+                        'Assign new map',
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed:
+                          _map.entries.isEmpty != true
+                              ? () {
+                                foodDataManager.saveEntry(_map);
+                              }
+                              : null,
+
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xff393E46),
+                      ),
+
+                      child: Text(
+                        'Save entry.',
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed:
+                          _map.entries.isEmpty != true
+                              ? () {
+                                foodDataManager.loadAllEntries().then((entries) {
+                                  print(entries);
+                                });
+                              }
+                              : null,
+                      
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xff393E46),
+                      ),
+                      
+                      child: Text(
+                        'Load entry.',
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      _getImageFromCamera();
-                    },
-                    child: Text(
-                      'Get From Camera',
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      _getImageFromGallery();
-                    },
-                    child: Text(
-                      'Get From Gallery',
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      updateMap({
-                        'name': 'Alice',
-                        'age': '30',
-                        'city': 'New York',
-                      });
-                    },
-                    child: Text(
-                      'Assign new map',
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                  ),
-                  ElevatedButton(
-                    onPressed:
-                        _map.entries.isEmpty != true
-                            ? () {
-                              foodDataManager.saveEntry(_map);
-                            }
-                            : null,
-                    child: Text(
-                      'Save entry.',
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                  ),
-                  ElevatedButton(
-                    onPressed:
-                        _map.entries.isEmpty != true
-                            ? () {
-                              foodDataManager.loadAllEntries().then((entries) {
-                                print(entries);
-                              });
-                            }
-                            : null,
-                    child: Text(
-                      'Load entry.',
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 20),
-            _selectedImage != null
-                ? Image.file(_selectedImage!, height: 200, fit: BoxFit.cover)
-                : const Text("Please get a camera image"),
-          ],
+              const SizedBox(height: 20),
+              _selectedImage != null
+                  ? Image.file(_selectedImage!, height: 200, fit: BoxFit.cover)
+                  : const Text("Please get a camera image"),
+            ],
+          ),
         ),
       ),
     );
