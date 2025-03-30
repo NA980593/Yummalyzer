@@ -46,7 +46,7 @@ class FoodAnalyzer {
 /// Calls Gemini API to analyze food from an image file.
 Future<String> callGemini(String imagePath) async {
   final apiKey = geminiApiKey;
-  final imageFile = File(imagePath);
+  final imageFile = File(imagePath); // Convert path to File object
 
   final analyzer = FoodAnalyzer(
     apiKey: apiKey,
@@ -74,3 +74,4 @@ Future<String> callGemini(String imagePath) async {
 
   return await analyzer.analyzeFood(imageFile);
 }
+
