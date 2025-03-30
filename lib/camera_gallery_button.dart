@@ -34,24 +34,26 @@ class CamGalButState extends State<camera_gallery_button> {
   Widget build(BuildContext context) {
     return Container(
       child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-              onPressed: () {
-                _getImageFromCamera();
-              },
-              child: Text('Get From Camera'),
-            ),
-            const SizedBox(height: 20,),
-            _selectedImage != null ? Image.file(_selectedImage!) : const Text("Please get a camera image"),
-            ElevatedButton(
-              onPressed: () {
-                _getImageFromGallery();
-              },
-              child: Text('Get From Gallery'),
-            ),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  _getImageFromCamera();
+                },
+                child: Text('Get From Camera'),
+              ),
+              const SizedBox(height: 20,),
+              _selectedImage != null ? Image.file(_selectedImage!, height: 200, fit: BoxFit.cover,) : const Text("Please get a camera image"),
+              ElevatedButton(
+                onPressed: () {
+                  _getImageFromGallery();
+                },
+                child: Text('Get From Gallery'),
+              ),
+            ],
+          ),
         ),
       ),
     );
