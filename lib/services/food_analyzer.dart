@@ -1,66 +1,51 @@
-import 'dart:convert';
 import 'dart:io';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:yummalyzer/secrets.dart';
-
-/// Converts an image file to a Base64-encoded string
-String imageToBase64(File image) {
-  final imageBytes = image.readAsBytesSync();
-  return base64Encode(imageBytes);
-}
 
 class FoodAnalyzer {
   final String apiKey;
   final String modelName;
   final String systemInstruction;
 
-  /// Constructor to initialize the FoodAnalyzer with necessary configurations.
   FoodAnalyzer({
     required this.apiKey,
-    this.modelName = 'gemini-2.0-flash',
+    this.modelName = 'gemini-2.5-pro-exp-03-25',
     required this.systemInstruction,
   });
 
-  /// Analyzes the food in the provided image by sending the Base64-encoded image to the Gemini API.
-  Future<String> analyzeFood(String imageBase64) async {
+  /// Analyzes the food in the provided image file by sending it directly to the Gemini API.
+  Future<String> analyzeFood(File imageFile) async {
     final model = GenerativeModel(
       model: modelName,
       apiKey: apiKey,
       generationConfig: GenerationConfig(
-        temperature: 0,
-        topK: 40,
+        temperature: 1,
+        topK: 64,
         topP: 0.95,
-        maxOutputTokens: 8192,
+        maxOutputTokens: 65536,
         responseMimeType: 'text/plain',
       ),
-      systemInstruction: Content.text(
-        systemInstruction,
-      ), // Wrap the systemInstruction into Content.text
+      systemInstruction: Content.system(systemInstruction),
     );
 
     final chat = model.startChat(history: []);
 
-    // Wrap the imageBase64 into the appropriate Content object
-    final content = Content.text(
-      imageBase64,
-    ); // Wrap Base64 string in Content.text
-
-    // Send the wrapped content to the model
-    final response = await chat.sendMessage(content);
+    // Send the image directly as a file
+    final response = await chat.sendMessage(
+      Content.multiModal([
+        DataPart.fromFile(imageFile), // Attach the image file directly
+      ]),
+    );
 
     return response.text ?? 'No response from model';
   }
 }
 
-/// This method will be called to trigger the food analysis.
-Future<String> callGemini(File image) async {
-  // Use the Gemini API key from secrets.dart
+/// Calls Gemini API to analyze food from an image file.
+Future<String> callGemini(String imagePath) async {
   final apiKey = geminiApiKey;
+  final imageFile = File(imagePath);
 
-  // Convert the image file to Base64
-  final imageBase64 = imageToBase64(image);
-
-  // Initialize the FoodAnalyzer instance
   final analyzer = FoodAnalyzer(
     apiKey: apiKey,
     systemInstruction: '''
@@ -85,8 +70,5 @@ Future<String> callGemini(File image) async {
     ''',
   );
 
-  // Analyze the food by sending the Base64-encoded image
-  final result = await analyzer.analyzeFood(imageBase64);
-
-  return result; // Return the result as a String
+  return await analyzer.analyzeFood(imageFile);
 }
