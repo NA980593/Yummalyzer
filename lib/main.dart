@@ -144,6 +144,17 @@ class _MyHomePageState extends State<MyHomePage> {
                             : null,
                     child: Text('Save entry.'),
                   ),
+                  ElevatedButton(
+                    onPressed:
+                        _map.entries.isEmpty != true
+                            ? () {
+                              foodDataManager.loadAllEntries().then((entries) {
+                                print(entries);
+                              });
+                            }
+                            : null,
+                    child: Text('Load entry.'),
+                  ),
                 ],
               ),
             ),
