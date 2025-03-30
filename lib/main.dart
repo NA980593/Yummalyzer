@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:yummalyzer/camera_gallery_button.dart';
 import 'package:yummalyzer/food_parser.dart';
 import 'package:yummalyzer/food_data_manager.dart';
 import 'package:yummalyzer/services/food_analyzer.dart';
@@ -102,12 +101,6 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Container(
-              height: 150,
-              width: 200,
-              color: Colors.grey,
-              child: CameraGalleryButton(),
-            ),
             Column(
               children:
                   _map.entries
