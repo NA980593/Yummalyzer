@@ -3,7 +3,7 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
 class CameraGalleryButton extends StatefulWidget {
-  const CameraGalleryButton({Key? key}) : super(key: key);
+  const CameraGalleryButton({super.key});
 
   @override
   State<CameraGalleryButton> createState() => CamGalButState();
