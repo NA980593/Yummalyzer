@@ -129,17 +129,22 @@ class _MyHomePageState extends State<MyHomePage> {
                     },
                     child: Text('Assign new map'),
                   ),
+                  ElevatedButton(
+                    onPressed:
+                        _map.entries.isEmpty != true
+                            ? () {
+                              foodDataManager.saveEntry(_map);
+                            }
+                            : null,
+                    child: Text('Save entry.'),
+                  ),
                 ],
               ),
             ),
             const SizedBox(height: 20),
-                  _selectedImage != null
-                      ? Image.file(
-                        _selectedImage!,
-                        height: 200,
-                        fit: BoxFit.cover,
-                      )
-                      : const Text("Please get a camera image"),
+            _selectedImage != null
+                ? Image.file(_selectedImage!, height: 200, fit: BoxFit.cover)
+                : const Text("Please get a camera image"),
           ],
         ),
       ),
