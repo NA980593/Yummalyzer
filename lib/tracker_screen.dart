@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yummalyzer/food_data_manager.dart';
+import 'dart:convert';
 
 class TrackerScreen extends StatefulWidget {
   const TrackerScreen({super.key, required this.title});
@@ -15,6 +16,8 @@ class _TrackerScreenState extends State<TrackerScreen> {
   List dates = [];
   List itemsForEachDate = [];
   var x;
+  bool isLoading = true;
+
   @override
   void initState() {
     super.initState();
@@ -26,9 +29,15 @@ class _TrackerScreenState extends State<TrackerScreen> {
       setState(() {
         // Call setState to trigger a rebuild
         x = entries;
+        isLoading = false;
         print(x);
       });
     });
+  }
+
+  String getPrettyJSONString(dynamic jsonObject) {
+    var encoder = JsonEncoder.withIndent('  ');
+    return encoder.convert(jsonObject);
   }
 
   @override
@@ -53,34 +62,40 @@ class _TrackerScreenState extends State<TrackerScreen> {
           ).textTheme.headlineLarge?.copyWith(color: const Color(0xffEEEEEE)),
         ),
       ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                child: Text(
-                  x.toString(),
-                  style: Theme.of(context).textTheme.bodyMedium,
+      body: isLoading 
+        ? const Center(child: CircularProgressIndicator()) 
+        : Column(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: SelectableText(
+                      getPrettyJSONString(x),
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: const Color(0xffEEEEEE),
+                        fontFamily: 'monospace',
+                      ),
+                    ),
+                  ),
                 ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 12.0),
-              child: SizedBox(
-                width: double.infinity,
-                child: _buildActionButton(
-                  context,
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: Icons.arrow_back,
-                  label: 'Back',
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: _buildActionButton(
+                    context,
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: Icons.arrow_back,
+                    label: 'Back',
+                  ),
                 ),
               ),
-            ),
-          ],
-        ),
-      ),
+            ],
+          ),
     );
   }
 
