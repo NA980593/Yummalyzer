@@ -63,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
         leading: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Image.asset(
-            'assets/images/yummalyzer_logo.png',
+            'assets/images/yummlogo.png',
             fit: BoxFit.contain,
           ),
         ),
