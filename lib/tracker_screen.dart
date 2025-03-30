@@ -14,7 +14,6 @@ class _TrackerScreenState extends State<TrackerScreen> {
   FoodDataManager foodDataManager = FoodDataManager();
   List dates = [];
   List itemsForEachDate = [];
-  bool _customTileExpanded = false;
   @override
   void initState() {
     super.initState();
