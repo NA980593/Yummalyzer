@@ -11,7 +11,7 @@ class themes {
       
       bodyMedium: TextStyle(
         fontFamily: 'Germagont',
-        fontSize: 14.0,
+        fontSize: 18.0,
         color: Color(0xffEEEEEE)
       ),
 
