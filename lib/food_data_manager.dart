@@ -1,47 +1,51 @@
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
-import 'package:yummalyzer/food_parser.dart';
+import 'dart:convert';
+import 'package:intl/intl.dart';
 
 class FoodDataManager {
-  static String formatFoodData(Map<String, String> foodData) {
-    final buffer = StringBuffer();
-    foodData.forEach((key, value) {
-      buffer.writeln('$key: $value');
-    });
-    return buffer.toString();
+  static const String _fileName = 'daily_entries.json';
+
+  Future<String> get _localPath async {
+    final directory = await getApplicationDocumentsDirectory();
+    return directory.path;
   }
 
-  static Future<void> saveFoodDataToFile(
-    Map<String, String> foodData,
-    String filename,
-  ) async {
-    try {
-      final directory = await getApplicationDocumentsDirectory();
-      final file = File('${directory.path}/$filename');
-      final formattedData = formatFoodData(foodData);
-      await file.writeAsString(formattedData);
-      print('Food data saved to: ${file.path}');
-    } catch (e) {
-      print('Error saving food data: $e');
+  Future<File> get _localFile async {
+    final path = await _localPath;
+    return File('$path/$_fileName');
+  }
+
+  Future<void> saveEntry(Map<String, String> entry) async {
+    final file = await _localFile;
+    final currentDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
+    Map<String, dynamic> existingData = await _readData();
+
+    if (existingData.containsKey(currentDate)) {
+      existingData[currentDate] = [...existingData[currentDate], entry];
+    } else {
+      existingData[currentDate] = [entry];
     }
+
+    await file.writeAsString(jsonEncode(existingData));
   }
 
-  static Future<Map<String, String>> loadFoodDataFromFile(
-    String filename,
-  ) async {
+  Future<Map<String, dynamic>> loadAllEntries() async {
+    return await _readData();
+  }
+
+  Future<List<Map<String, dynamic>>?> loadEntriesForDate(DateTime date) async {
+    final formattedDate = DateFormat('yyyy-MM-dd').format(date);
+    final data = await _readData();
+    return data[formattedDate]?.cast<Map<String, dynamic>>();
+  }
+
+  Future<Map<String, dynamic>> _readData() async {
     try {
-      final directory = await getApplicationDocumentsDirectory();
-      final file = File('${directory.path}/$filename');
-      final fileExists = await file.exists();
-      if (fileExists) {
-        final fileContent = await file.readAsString();
-        return FoodParser.parseFoodString(fileContent);
-      } else {
-        print('File not found: ${file.path}');
-        return {};
-      }
+      final file = await _localFile;
+      final contents = await file.readAsString();
+      return jsonDecode(contents) as Map<String, dynamic>;
     } catch (e) {
-      print('Error loading food data: $e');
       return {};
     }
   }
