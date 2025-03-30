@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yummalyzer/camera_gallery_button.dart';
+import 'package:yummalyzer/food_parser.dart';
+import 'package:yummalyzer/food_data_manager.dart';
 
 void main() {
   runApp(const MyApp());
