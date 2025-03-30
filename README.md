@@ -47,9 +47,9 @@
 
 ## Team Members
 
-- **[Nishchay Arjyal](https://www.linkedin.com/in/nishchay-arjyal-0a8064284/)**:
-- **[Kush Desai](https://www.linkedin.com/in/kushdd/)**: 
-- **[Nick Santone](https://www.linkedin.com/in/nicholas-santone-31b7a3293/)**: 
+- **[Nishchay Arjyal](https://www.linkedin.com/in/nishchay-arjyal-0a8064284/)**
+- **[Kush Desai](https://www.linkedin.com/in/kushdd/)**
+- **[Nick Santone](https://www.linkedin.com/in/nicholas-santone-31b7a3293/)**
 
 ---
 
