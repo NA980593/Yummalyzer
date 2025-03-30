@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:yummalyzer/camera_gallery_button.dart';
 import 'package:yummalyzer/food_parser.dart';
 import 'package:yummalyzer/food_data_manager.dart';
+import 'package:yummalyzer/services/food_analyzer.dart';
 
 void main() {
   runApp(const MyApp());
@@ -89,7 +90,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ElevatedButton(
               child: Text('Assign Another New Map'),
               onPressed: () {
-                updateMap({"item": "apple", "color": "red", "price": "1.00"});
+                print(callGemini(IMAGE_VARIABLE));
               },
             ),
           ],

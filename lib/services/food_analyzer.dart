@@ -48,12 +48,12 @@ class FoodAnalyzer {
   }
 }
 
-void main() async {
+/// This method will be called to trigger the food analysis.
+Future<String> callGemini(String imagePath) async {
   // Use the Gemini API key from secrets.dart
   final apiKey = geminiApiKey;
-  
+
   // Convert the image file to Base64
-  final imagePath = 'path_to_your_image.jpg';  // Replace with the actual path to your image
   final imageBase64 = imageToBase64(imagePath);
 
   // Initialize the FoodAnalyzer instance
@@ -83,5 +83,6 @@ void main() async {
 
   // Analyze the food by sending the Base64-encoded image
   final result = await analyzer.analyzeFood(imageBase64);
-  print(result); // Print the result
+
+  return result; // Return the result as a String
 }
