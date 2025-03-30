@@ -76,12 +76,6 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  void sendToGemini() async {
-    String result = await callGemini(_selectedImage!);
-    _map = FoodParser.parseFoodString(result);
-    setState(() {});
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -105,7 +99,9 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed:
                   _selectedImage != null
                       ? () {
-                        sendToGemini();
+                        callGemini(_selectedImage!).then((result) {
+                          updateMap(FoodParser.parseFoodString(result));
+                        });
                       }
                       : null,
             ),
