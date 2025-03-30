@@ -4,7 +4,6 @@ import 'package:yummalyzer/food_data_manager.dart';
 import 'package:yummalyzer/services/food_analyzer.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
-import 'themes/newFont.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key, required this.title});
