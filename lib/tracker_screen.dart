@@ -14,6 +14,7 @@ class _TrackerScreenState extends State<TrackerScreen> {
   FoodDataManager foodDataManager = FoodDataManager();
   List dates = [];
   List itemsForEachDate = [];
+  var x;
   @override
   void initState() {
     super.initState();
@@ -21,7 +22,6 @@ class _TrackerScreenState extends State<TrackerScreen> {
   }
 
   _getDataFromSave() {
-    var x;
     foodDataManager.loadAllEntries().then((entries) {
       setState(() {
         // Call setState to trigger a rebuild
@@ -39,7 +39,7 @@ class _TrackerScreenState extends State<TrackerScreen> {
         centerTitle: true,
         title: Text(widget.title),
       ),
-      body: Text('x'),
+      body: Text(x.toString()),
     );
   }
 }
