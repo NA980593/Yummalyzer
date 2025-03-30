@@ -94,7 +94,6 @@ class _MyHomePageState extends State<MyHomePage> {
                       .toList(),
             ),
             ElevatedButton(
-              child: Text('Yummalyze!'),
               onPressed:
                   _selectedImage != null
                       ? () {
@@ -103,6 +102,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         });
                       }
                       : null,
+              child: Text('Yummalyze!'),
             ),
             SingleChildScrollView(
               child: Column(
