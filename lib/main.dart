@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yummalyzer/home_screen.dart';
-import 'themes/newFont.dart';
+import 'themes/themes.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,7 +14,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Yummalyzer',
-      theme: newFont.themey,
+      theme: themes.themeyTitle,
+      darkTheme: themes.themeyButtons,
       home: const HomeScreen(title: 'Flutter Demo Home Page'),
     );
   }
