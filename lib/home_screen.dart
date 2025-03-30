@@ -60,11 +60,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> _analyzeImage() async {
     if (_selectedImage == null) return;
-    
+
     setState(() {
       _isAnalyzing = true;
     });
-    
+
     try {
       final result = await callGemini(_selectedImage!);
       updateMap(FoodParser.parseFoodString(result));
@@ -98,9 +98,9 @@ class _HomeScreenState extends State<HomeScreen> {
         centerTitle: true,
         title: Text(
           widget.title,
-          style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-            color: const Color(0xffEEEEEE),
-          ),
+          style: Theme.of(
+            context,
+          ).textTheme.headlineLarge?.copyWith(color: const Color(0xffEEEEEE)),
         ),
       ),
       body: SafeArea(
@@ -127,47 +127,48 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(16),
-                    child: _selectedImage != null
-                        ? Stack(
-                            fit: StackFit.expand,
-                            children: [
-                              Image.file(
-                                _selectedImage!,
-                                fit: BoxFit.cover,
-                              ),
-                              if (_isAnalyzing)
-                                Container(
-                                  color: Colors.black.withOpacity(0.7),
-                                  child: const Center(
-                                    child: CircularProgressIndicator(
-                                      color: Color(0xff00ADB5),
+                    child:
+                        _selectedImage != null
+                            ? Stack(
+                              fit: StackFit.expand,
+                              children: [
+                                Image.file(_selectedImage!, fit: BoxFit.cover),
+                                if (_isAnalyzing)
+                                  Container(
+                                    color: Colors.black.withOpacity(0.7),
+                                    child: const Center(
+                                      child: CircularProgressIndicator(
+                                        color: Color(0xff00ADB5),
+                                      ),
                                     ),
                                   ),
-                                ),
-                            ],
-                          )
-                        : Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.camera_alt,
-                                  size: 64,
-                                  color: const Color(0xffEEEEEE).withOpacity(0.6),
-                                ),
-                                const SizedBox(height: 16),
-                                Text(
-                                  'Select an image to analyze',
-                                  style: Theme.of(context).textTheme.bodyMedium,
-                                ),
                               ],
+                            )
+                            : Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.camera_alt,
+                                    size: 64,
+                                    color: const Color(
+                                      0xffEEEEEE,
+                                    ).withOpacity(0.6),
+                                  ),
+                                  const SizedBox(height: 16),
+                                  Text(
+                                    'Select an image to analyze',
+                                    style:
+                                        Theme.of(context).textTheme.bodyMedium,
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
                   ),
                 ),
-                
+
                 const SizedBox(height: 24),
-                
+
                 // Image Selection Buttons
                 Row(
                   children: [
@@ -190,21 +191,22 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 ),
-                
+
                 const SizedBox(height: 24),
-                
+
                 // Analyze Button
                 _buildPrimaryButton(
                   context,
-                  onPressed: _selectedImage != null && !_isAnalyzing
-                      ? _analyzeImage
-                      : null,
+                  onPressed:
+                      _selectedImage != null && !_isAnalyzing
+                          ? _analyzeImage
+                          : null,
                   label: 'Yummalyze!',
                   icon: Icons.analytics,
                 ),
-                
+
                 const SizedBox(height: 24),
-                
+
                 // Results Section
                 if (_map.isNotEmpty) ...[
                   Container(
@@ -225,36 +227,43 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         Text(
                           'Analysis Results',
-                          style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                            color: const Color(0xff00ADB5),
-                          ),
+                          style: Theme.of(context).textTheme.headlineMedium
+                              ?.copyWith(color: const Color(0xff00ADB5)),
                         ),
-                        const Divider(
-                          color: Color(0xff00ADB5),
-                          thickness: 1,
-                        ),
+                        const Divider(color: Color(0xff00ADB5), thickness: 1),
                         const SizedBox(height: 8),
-                        ..._map.entries.map((entry) => Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 4),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                '${entry.key}:',
-                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                  fontWeight: FontWeight.bold,
+                        ..._map.entries
+                            .map(
+                              (entry) => Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 4,
+                                ),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      '${entry.key}:',
+                                      style: Theme.of(
+                                        context,
+                                      ).textTheme.bodyMedium?.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Expanded(
+                                      child: Text(
+                                        entry.value,
+                                        style:
+                                            Theme.of(
+                                              context,
+                                            ).textTheme.bodyMedium,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                              const SizedBox(width: 8),
-                              Expanded(
-                                child: Text(
-                                  entry.value,
-                                  style: Theme.of(context).textTheme.bodyMedium,
-                                ),
-                              ),
-                            ],
-                          ),
-                        )).toList(),
+                            )
+                            .toList(),
                         const SizedBox(height: 16),
                         Row(
                           children: [
@@ -265,7 +274,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                   foodDataManager.saveEntry(_map);
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
-                                      content: Text('Entry saved successfully!'),
+                                      content: Text(
+                                        'Entry saved successfully!',
+                                      ),
                                       backgroundColor: Color(0xff00ADB5),
                                     ),
                                   );
@@ -279,52 +290,80 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: _buildActionButton(
                                 context,
                                 onPressed: () {
-                                  foodDataManager.loadAllEntries().then((entries) {
+                                  foodDataManager.loadAllEntries().then((
+                                    entries,
+                                  ) {
                                     showDialog(
                                       context: context,
-                                      builder: (context) => AlertDialog(
-                                        backgroundColor: const Color(0xff393E46),
-                                        title: Text(
-                                          'Saved Entries',
-                                          style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                                            color: const Color(0xff00ADB5),
-                                          ),
-                                        ),
-                                        content: SizedBox(
-                                          width: double.maxFinite,
-                                          child: ListView.builder(
-                                            shrinkWrap: true,
-                                            itemCount: entries.length,
-                                            itemBuilder: (context, index) {
-                                              return Card(
-                                                color: const Color(0xff222831),
-                                                margin: const EdgeInsets.only(bottom: 8),
-                                                child: Padding(
-                                                  padding: const EdgeInsets.all(8.0),
-                                                  child: Text(
-                                                    entries[index].toString(),
-                                                    style: Theme.of(context).textTheme.bodyMedium,
+                                      builder:
+                                          (context) => AlertDialog(
+                                            backgroundColor: const Color(
+                                              0xff393E46,
+                                            ),
+                                            title: Text(
+                                              'Saved Entries',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headlineMedium
+                                                  ?.copyWith(
+                                                    color: const Color(
+                                                      0xff00ADB5,
+                                                    ),
+                                                  ),
+                                            ),
+                                            content: SizedBox(
+                                              width: double.maxFinite,
+                                              child: ListView.builder(
+                                                shrinkWrap: true,
+                                                itemCount: entries.length,
+                                                itemBuilder: (context, index) {
+                                                  return Card(
+                                                    color: const Color(
+                                                      0xff222831,
+                                                    ),
+                                                    margin:
+                                                        const EdgeInsets.only(
+                                                          bottom: 8,
+                                                        ),
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                            8.0,
+                                                          ),
+                                                      child: Text(
+                                                        entries[index]
+                                                            .toString(),
+                                                        style:
+                                                            Theme.of(context)
+                                                                .textTheme
+                                                                .bodyMedium,
+                                                      ),
+                                                    ),
+                                                  );
+                                                },
+                                              ),
+                                            ),
+                                            actions: [
+                                              TextButton(
+                                                onPressed:
+                                                    () =>
+                                                        Navigator.pop(context),
+                                                child: Text(
+                                                  'Close',
+                                                  style: TextStyle(
+                                                    color: const Color(
+                                                      0xff00ADB5,
+                                                    ),
                                                   ),
                                                 ),
-                                              );
-                                            },
+                                              ),
+                                            ],
                                           ),
-                                        ),
-                                        actions: [
-                                          TextButton(
-                                            onPressed: () => Navigator.pop(context),
-                                            child: Text(
-                                              'Close',
-                                              style: TextStyle(color: const Color(0xff00ADB5)),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
                                     );
                                   });
                                 },
                                 icon: Icons.history,
-                                label: 'History',
+                                label: 'Tracker',
                               ),
                             ),
                           ],
@@ -340,7 +379,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-  
+
   Widget _buildActionButton(
     BuildContext context, {
     required VoidCallback onPressed,
@@ -353,19 +392,14 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: const Color(0xff393E46),
         foregroundColor: const Color(0xffEEEEEE),
         padding: const EdgeInsets.symmetric(vertical: 12),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         elevation: 4,
       ),
       icon: Icon(icon),
-      label: Text(
-        label,
-        style: Theme.of(context).textTheme.bodyMedium,
-      ),
+      label: Text(label, style: Theme.of(context).textTheme.bodyMedium),
     );
   }
-  
+
   Widget _buildPrimaryButton(
     BuildContext context, {
     required VoidCallback? onPressed,
@@ -378,18 +412,16 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: const Color(0xff00ADB5),
         foregroundColor: const Color(0xffEEEEEE),
         padding: const EdgeInsets.symmetric(vertical: 16),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         elevation: 6,
         disabledBackgroundColor: const Color(0xff00ADB5).withOpacity(0.3),
       ),
       icon: Icon(icon, size: 28),
       label: Text(
         label,
-        style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-          color: const Color(0xffEEEEEE),
-        ),
+        style: Theme.of(
+          context,
+        ).textTheme.headlineMedium?.copyWith(color: const Color(0xffEEEEEE)),
       ),
     );
   }
