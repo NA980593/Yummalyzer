@@ -128,43 +128,39 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(16),
-                    child:
-                        _selectedImage != null
-                            ? Stack(
-                              fit: StackFit.expand,
-                              children: [
-                                Image.file(_selectedImage!, fit: BoxFit.cover),
-                                if (_isAnalyzing)
-                                  Container(
-                                    color: Colors.black.withOpacity(0.7),
-                                    child: const Center(
-                                      child: CircularProgressIndicator(
-                                        color: Color(0xff00ADB5),
-                                      ),
+                    child: _selectedImage != null
+                        ? Stack(
+                            fit: StackFit.expand,
+                            children: [
+                              Image.file(_selectedImage!, fit: BoxFit.cover),
+                              if (_isAnalyzing)
+                                Container(
+                                  color: Colors.black.withOpacity(0.7),
+                                  child: const Center(
+                                    child: CircularProgressIndicator(
+                                      color: Color(0xff00ADB5),
                                     ),
                                   ),
+                                ),
+                            ],
+                          )
+                        : Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.camera_alt,
+                                  size: 64,
+                                  color: const Color(0xffEEEEEE).withOpacity(0.6),
+                                ),
+                                const SizedBox(height: 16),
+                                Text(
+                                  'Select an image to analyze',
+                                  style: Theme.of(context).textTheme.bodyMedium,
+                                ),
                               ],
-                            )
-                            : Center(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    Icons.camera_alt,
-                                    size: 64,
-                                    color: const Color(
-                                      0xffEEEEEE,
-                                    ).withOpacity(0.6),
-                                  ),
-                                  const SizedBox(height: 16),
-                                  Text(
-                                    'Select an image to analyze',
-                                    style:
-                                        Theme.of(context).textTheme.bodyMedium,
-                                  ),
-                                ],
-                              ),
                             ),
+                          ),
                   ),
                 ),
 
@@ -198,74 +194,92 @@ class _HomeScreenState extends State<HomeScreen> {
                 // Analyze Button
                 _buildPrimaryButton(
                   context,
-                  onPressed:
-                      _selectedImage != null && !_isAnalyzing
-                          ? _analyzeImage
-                          : null,
+                  onPressed: _selectedImage != null && !_isAnalyzing
+                      ? _analyzeImage
+                      : null,
                   label: 'Yummalyze!',
                   icon: Icons.analytics,
                 ),
 
                 const SizedBox(height: 24),
 
-                // Results Section
+                // Results Section - Updated to new style
                 if (_map.isNotEmpty) ...[
                   Container(
                     decoration: BoxDecoration(
                       color: const Color(0xff393E46),
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(20),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.2),
-                          blurRadius: 10,
-                          offset: const Offset(0, 4),
+                          color: Colors.black.withOpacity(0.1),
+                          blurRadius: 15,
+                          offset: const Offset(0, 6),
                         ),
                       ],
                     ),
-                    padding: const EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(20),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'Analysis Results',
-                          style: Theme.of(context).textTheme.headlineMedium
-                              ?.copyWith(color: const Color(0xff00ADB5)),
-                        ),
-                        const Divider(color: Color(0xff00ADB5), thickness: 1),
-                        const SizedBox(height: 8),
-                        ..._map.entries
-                            .map(
-                              (entry) => Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 4,
-                                ),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      '${entry.key}:',
-                                      style: Theme.of(
-                                        context,
-                                      ).textTheme.bodyMedium?.copyWith(
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    const SizedBox(width: 8),
-                                    Expanded(
-                                      child: Text(
-                                        entry.value,
-                                        style:
-                                            Theme.of(
-                                              context,
-                                            ).textTheme.bodyMedium,
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.insights_rounded,
+                              color: const Color(0xff00ADB5),
+                              size: 28,
+                            ),
+                            const SizedBox(width: 10),
+                            Text(
+                              'Nutrition Analysis',
+                              style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                                color: const Color(0xff00ADB5),
+                                fontWeight: FontWeight.bold,
                               ),
-                            )
-                            .toList(),
-                        const SizedBox(height: 16),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 8),
+                        const Divider(
+                          color: Color(0xff00ADB5),
+                          thickness: 1,
+                          height: 20,
+                        ),
+                        const SizedBox(height: 12),
+                        ..._map.entries.map(
+                          (entry) => Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 12, vertical: 6),
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xff00ADB5).withOpacity(0.1),
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: Text(
+                                    entry.key,
+                                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      color: const Color(0xff00ADB5),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 12),
+                                Expanded(
+                                  child: Text(
+                                    entry.value,
+                                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                      color: const Color(0xffEEEEEE).withOpacity(0.9),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ).toList(),
+                        const SizedBox(height: 20),
                         Row(
                           children: [
                             Expanded(
@@ -275,9 +289,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   foodDataManager.saveEntry(_map);
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
-                                      content: Text(
-                                        'Entry saved successfully!',
-                                      ),
+                                      content: Text('Entry saved successfully!'),
                                       backgroundColor: Color(0xff00ADB5),
                                     ),
                                   );
@@ -294,9 +306,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder:
-                                          (context) =>
-                                              TrackerScreen(title: 'Tracker'),
+                                      builder: (context) => const TrackerScreen(title: 'Tracker'),
                                     ),
                                   );
                                 },
