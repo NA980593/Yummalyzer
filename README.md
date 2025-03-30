@@ -20,7 +20,7 @@
 ## Key Features
 1. **Real-time Food Analysis** – Users can upload a picture of their meal and receive instant nutritional breakdowns.
 2. **Nutrition Info** – Helps users keep track of their dietary intake.
-            <ins>Info Given:                  </ins>
+            Info Given:                
                   - *is the item food?*
                   - *name of food*
                   - *calories*
