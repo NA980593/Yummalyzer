@@ -1,9 +1,27 @@
 import 'package:flutter/material.dart';
 
-class FoodUIPopulator extends StatelessWidget {
-  final Map map;
+class FoodUIPopulator extends StatefulWidget {
+  final Map initialMap = {};
+  @override
+  State<FoodUIPopulator> createState() => _FoodUIPopulatorState();
+}
 
-  const FoodUIPopulator(Key key, this.map) : super(key: key);
+class _FoodUIPopulatorState extends State<FoodUIPopulator> {
+  late Map _map;
+
+  @override
+  void initState() {
+    super.initState();
+    _map =
+        widget.initialMap; // Initialize the map from the widget's initial data
+  }
+
+  // Method to update the map and trigger a rebuild
+  void updateMap(Map newMap) {
+    setState(() {
+      _map = newMap;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +29,7 @@ class FoodUIPopulator extends StatelessWidget {
       body: Container(
         child: Column(
           children:
-              map.entries.map((e) => Text("${e.key}: ${e.value}")).toList(),
+              _map.entries.map((e) => Text("${e.key}: ${e.value}")).toList(),
         ),
       ),
     );
