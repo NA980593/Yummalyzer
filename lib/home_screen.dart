@@ -60,6 +60,13 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Image.asset(
+            'assets/images/yummalyzer_logo.jpg',
+            fit: BoxFit.contain,
+          ),
+        ),
         backgroundColor: Colors.orangeAccent,
         centerTitle: true,
         title: Text(widget.title),
