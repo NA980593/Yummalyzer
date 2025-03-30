@@ -31,7 +31,34 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  late Map _map;
+
+  @override
+  void initState() {
+    super.initState();
+    _map = {
+      "name": "testname",
+      "calories": "testcal",
+      "serving-size": "testsize",
+      "sodium": "testsodium",
+      "cholesterol": "testcholesterol",
+      "carbs": "testcarbs",
+      "protein": "testprotein",
+      "fat": "testfat",
+      "sugar": "testsugar",
+      "fiber": "testfiber",
+      "iron": "testiron",
+      "potassium": "testpotassium",
+      "calcium": "testcalcium",
+    }; // Initialize test map
+  }
+
+  // Method to update the map and trigger a rebuild
+  void updateMap(Map newMap) {
+    setState(() {
+      _map = newMap;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +76,18 @@ class _MyHomePageState extends State<MyHomePage> {
               width: 200,
               color: Colors.grey,
               child: CameraGalleryButton(),
+            ),
+            Column(
+              children:
+                  _map.entries
+                      .map((e) => Text("${e.key}: ${e.value}"))
+                      .toList(),
+            ),
+            ElevatedButton(
+              child: Text('Assign Another New Map'),
+              onPressed: () {
+                updateMap({"item": "apple", "color": "red", "price": "1.00"});
+              },
             ),
           ],
         ),
