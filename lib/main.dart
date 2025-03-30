@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yummalyzer/camera_gallery_button.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Yummalyzer',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
         //
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -54,6 +55,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  
   int _counter = 0;
 
   void _incrementCounter() {
@@ -109,6 +111,7 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
+            Container(height: 150, width:200, color : Colors.grey, child: camera_gallery_button()),
           ],
         ),
       ),
