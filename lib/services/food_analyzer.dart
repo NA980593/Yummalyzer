@@ -43,10 +43,20 @@ class FoodAnalyzer {
   }
 }
 
-/// Calls Gemini API to analyze food from an image file.
-Future<String> callGemini(String imagePath) async {
+/// Calls Gemini API to analyze food from an image.
+/// Accepts either a `String` (file path) or a `File` object.
+Future<String> callGemini(dynamic imageInput) async {
   final apiKey = geminiApiKey;
-  final imageFile = File(imagePath); // Convert path to File object
+
+  // Ensure the input is a File object
+  File imageFile;
+  if (imageInput is File) {
+    imageFile = imageInput; // Already a File
+  } else if (imageInput is String) {
+    imageFile = File(imageInput); // Convert path to File
+  } else {
+    throw ArgumentError('Invalid image input. Must be a File or a String (file path).');
+  }
 
   final analyzer = FoodAnalyzer(
     apiKey: apiKey,
@@ -74,4 +84,3 @@ Future<String> callGemini(String imagePath) async {
 
   return await analyzer.analyzeFood(imageFile);
 }
-
