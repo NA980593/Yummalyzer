@@ -4,6 +4,7 @@ import 'package:yummalyzer/food_data_manager.dart';
 import 'package:yummalyzer/services/food_analyzer.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+import 'themes/newFont.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,9 +18,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Yummalyzer',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
-      ),
+      theme: newFont.themey,
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
