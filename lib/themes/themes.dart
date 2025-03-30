@@ -4,15 +4,12 @@ class themes {
   static ThemeData themeyTitle = ThemeData(
     fontFamily: 'Happy Chicken',
     textTheme: TextTheme(
-      bodyLarge: TextStyle(
-        fontFamily: 'Happy Chicken',
-        fontSize: 16.0,
-      ),
-      
+      bodyLarge: TextStyle(fontFamily: 'Happy Chicken', fontSize: 16.0),
+
       bodyMedium: TextStyle(
         fontFamily: 'Germagont',
         fontSize: 18.0,
-        color: Color(0xffEEEEEE)
+        color: Color(0xffEEEEEE),
       ),
 
       headlineLarge: TextStyle(
