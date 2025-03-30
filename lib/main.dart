@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:yummalyzer/food_parser.dart';
 import 'package:yummalyzer/food_data_manager.dart';
 import 'package:yummalyzer/services/food_analyzer.dart';
-import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
@@ -36,9 +35,11 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  late Map _map;
+  late Map<String, String> _map;
 
   File? _selectedImage;
+
+  FoodDataManager foodDataManager = FoodDataManager();
 
   Future<void> _getImageFromCamera() async {
     final returnedImage = await ImagePicker().pickImage(
@@ -65,25 +66,11 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    _map = {
-      "name": "testname",
-      "calories": "testcal",
-      "serving-size": "testsize",
-      "sodium": "testsodium",
-      "cholesterol": "testcholesterol",
-      "carbs": "testcarbs",
-      "protein": "testprotein",
-      "fat": "testfat",
-      "sugar": "testsugar",
-      "fiber": "testfiber",
-      "iron": "testiron",
-      "potassium": "testpotassium",
-      "calcium": "testcalcium",
-    }; // Initialize test map
+    _map = {}; // Initialize empty map
   }
 
   // Method to update the map and trigger a rebuild
-  void updateMap(Map newMap) {
+  void updateMap(Map<String, String> newMap) {
     setState(() {
       _map = newMap;
     });
