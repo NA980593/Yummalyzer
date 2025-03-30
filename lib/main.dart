@@ -126,14 +126,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     },
                     child: Text('Get From Camera'),
                   ),
-                  const SizedBox(height: 20),
-                  _selectedImage != null
-                      ? Image.file(
-                        _selectedImage!,
-                        height: 200,
-                        fit: BoxFit.cover,
-                      )
-                      : const Text("Please get a camera image"),
                   ElevatedButton(
                     onPressed: () {
                       _getImageFromGallery();
@@ -153,6 +145,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 ],
               ),
             ),
+            const SizedBox(height: 20),
+                  _selectedImage != null
+                      ? Image.file(
+                        _selectedImage!,
+                        height: 200,
+                        fit: BoxFit.cover,
+                      )
+                      : const Text("Please get a camera image"),
           ],
         ),
       ),
