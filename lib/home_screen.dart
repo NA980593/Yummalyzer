@@ -240,6 +240,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
               const SizedBox(height: 24),
 
+              // Always visible Tracker button
+              _buildTrackerButton(context),
+
+              const SizedBox(height: 24),
+
               // Results Section
               if (_map.isNotEmpty) ...[
                 Container(
@@ -294,17 +299,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ).toList(),
                       const SizedBox(height: 16),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: _buildSaveButton(context),
-                          ),
-                          const SizedBox(width: 16),
-                          Expanded(
-                            child: _buildTrackerButton(context),
-                          ),
-                        ],
-                      ),
+                      _buildSaveButton(context),
                     ],
                   ),
                 ),
