@@ -21,7 +21,7 @@
 1. **Real-time Food Analysis** – Users can upload a picture of their meal and receive instant nutritional breakdowns.
 2. **Nutrition Info** – Helps users keep track of their dietary intake.
    
-Info Given:                
+<ins>Info Given:     </ins>           
 - *is the item food?*
 - *name of food*
 - *calories*
