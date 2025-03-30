@@ -109,9 +109,12 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             ElevatedButton(
               child: Text('Assign Another New Map'),
-              onPressed: () {
-                print(callGemini(_selectedImage!));
-              },
+              onPressed:
+                  _selectedImage != null
+                      ? () {
+                        print(callGemini(_selectedImage!));
+                      }
+                      : null,
             ),
             SingleChildScrollView(
               child: Column(
