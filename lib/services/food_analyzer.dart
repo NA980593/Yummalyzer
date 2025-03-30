@@ -4,8 +4,8 @@ import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:yummalyzer/secrets.dart';
 
 /// Converts an image file to a Base64-encoded string
-String imageToBase64(String imagePath) {
-  final imageBytes = File(imagePath).readAsBytesSync();
+String imageToBase64(File image) {
+  final imageBytes = image.readAsBytesSync();
   return base64Encode(imageBytes);
 }
 
@@ -33,13 +33,17 @@ class FoodAnalyzer {
         maxOutputTokens: 8192,
         responseMimeType: 'text/plain',
       ),
-      systemInstruction: Content.text(systemInstruction), // Wrap the systemInstruction into Content.text
+      systemInstruction: Content.text(
+        systemInstruction,
+      ), // Wrap the systemInstruction into Content.text
     );
 
     final chat = model.startChat(history: []);
 
     // Wrap the imageBase64 into the appropriate Content object
-    final content = Content.text(imageBase64); // Wrap Base64 string in Content.text
+    final content = Content.text(
+      imageBase64,
+    ); // Wrap Base64 string in Content.text
 
     // Send the wrapped content to the model
     final response = await chat.sendMessage(content);
@@ -49,12 +53,12 @@ class FoodAnalyzer {
 }
 
 /// This method will be called to trigger the food analysis.
-Future<String> callGemini(String imagePath) async {
+Future<String> callGemini(File image) async {
   // Use the Gemini API key from secrets.dart
   final apiKey = geminiApiKey;
 
   // Convert the image file to Base64
-  final imageBase64 = imageToBase64(imagePath);
+  final imageBase64 = imageToBase64(image);
 
   // Initialize the FoodAnalyzer instance
   final analyzer = FoodAnalyzer(
