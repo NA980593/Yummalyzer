@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:yummalyzer/food_data_manager.dart';
-import 'dart:convert';
 
 class TrackerScreen extends StatefulWidget {
   const TrackerScreen({super.key, required this.title});
