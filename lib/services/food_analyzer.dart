@@ -25,16 +25,18 @@ class FoodAnalyzer {
         maxOutputTokens: 65536,
         responseMimeType: 'text/plain',
       ),
-      systemInstruction: Content.system(systemInstruction),
+      systemInstruction: Content.text(systemInstruction),
     );
 
     final chat = model.startChat(history: []);
 
-    // Send the image directly as a file
+    // Read the image file as bytes
+    final imageBytes = imageFile.readAsBytesSync();
+    final imagePart = DataPart('image/jpeg', imageBytes); // Correct image format
+
+    // Send the image directly
     final response = await chat.sendMessage(
-      Content.multiModal([
-        DataPart.fromFile(imageFile), // Attach the image file directly
-      ]),
+      Content.multi([imagePart]), // Corrected method
     );
 
     return response.text ?? 'No response from model';
