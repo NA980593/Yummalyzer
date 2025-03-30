@@ -1,78 +1,87 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:image_picker/image_picker.dart';
+import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:yummalyzer/secrets.dart';
 
+/// Converts an image file to a Base64-encoded string
+String imageToBase64(String imagePath) {
+  final imageBytes = File(imagePath).readAsBytesSync();
+  return base64Encode(imageBytes);
+}
+
 class FoodAnalyzer {
-  final String apiKey = geminiApiKey;
+  final String apiKey;
+  final String modelName;
+  final String systemInstruction;
 
-  Future<Map<String, dynamic>?> analyzeFood(BuildContext context) async {
-    final ImagePicker picker = ImagePicker();
-    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+  /// Constructor to initialize the FoodAnalyzer with necessary configurations.
+  FoodAnalyzer({
+    required this.apiKey,
+    this.modelName = 'gemini-2.0-flash',
+    required this.systemInstruction,
+  });
 
-    if (image == null) return null;
-
-    File imageFile = File(image.path);
-    List<int> imageBytes = await imageFile.readAsBytes();
-    String base64Image = base64Encode(imageBytes);
-
-    String prompt =
-        "give me estimated information about the food in this picture in the following format in a JSON so I can parse it with code:  " +
-        " is_food: " +
-        " name: " +
-        " calories: " +
-        " serving_size: " +
-        " sodium: " +
-        " cholesterol: " +
-        " carbs: " +
-        " protein: " +
-        " fat: " +
-        " sugar: " +
-        " fiber: " +
-        " iron: " +
-        " potassium: " +
-        " calcium: ";
-
-    Uri url = Uri.parse(
-      "https://generativelanguage.googleapis.com/v1/models/gemini-pro-vision:generateContent?key=$apiKey",
+  /// Analyzes the food in the provided image by sending the Base64-encoded image to the Gemini API.
+  Future<String> analyzeFood(String imageBase64) async {
+    final model = GenerativeModel(
+      model: modelName,
+      apiKey: apiKey,
+      generationConfig: GenerationConfig(
+        temperature: 0,
+        topK: 40,
+        topP: 0.95,
+        maxOutputTokens: 8192,
+        responseMimeType: 'text/plain',
+      ),
+      systemInstruction: Content.text(systemInstruction), // Wrap the systemInstruction into Content.text
     );
 
-    var requestBody = jsonEncode({
-      "contents": [
-        {
-          "parts": [
-            {"text": prompt},
-            {
-              "inline_data": {"mime_type": "image/jpeg", "data": base64Image},
-            },
-          ],
-        },
-      ],
-    });
+    final chat = model.startChat(history: []);
 
-    var response = await http.post(
-      url,
-      headers: {"Content-Type": "application/json"},
-      body: requestBody,
-    );
+    // Wrap the imageBase64 into the appropriate Content object
+    final content = Content.text(imageBase64); // Wrap Base64 string in Content.text
 
-    if (response.statusCode == 200) {
-      var jsonResponse = jsonDecode(response.body);
-      String resultText =
-          jsonResponse['candidates'][0]['content']['parts'][0]['text'];
+    // Send the wrapped content to the model
+    final response = await chat.sendMessage(content);
 
-      try {
-        Map<String, dynamic> extractedData = jsonDecode(resultText);
-        return extractedData;
-      } catch (e) {
-        print("Error parsing response: $e");
-        return null;
-      }
-    } else {
-      print("Error: ${response.body}");
-      return null;
-    }
+    return response.text ?? 'No response from model';
   }
+}
+
+void main() async {
+  // Use the Gemini API key from secrets.dart
+  final apiKey = geminiApiKey;
+  
+  // Convert the image file to Base64
+  final imagePath = 'path_to_your_image.jpg';  // Replace with the actual path to your image
+  final imageBase64 = imageToBase64(imagePath);
+
+  // Initialize the FoodAnalyzer instance
+  final analyzer = FoodAnalyzer(
+    apiKey: apiKey,
+    systemInstruction: '''
+    give me estimated information about the food in this picture in the following format so I can parse it with code. 
+    and do not put a space after the colon, do not put quotes, just put the answer itself right after the colon, nothing more. 
+    PLEASE make sure the format is in key:value no spaces, no brackets, no commas, no quotes.
+
+    is_food:ANSWER
+    name:ANSWER
+    calories:ANSWER
+    serving_size:ANSWER
+    sodium:ANSWER
+    cholesterol:ANSWER
+    carbs:ANSWER
+    protein:ANSWER
+    fat:ANSWER
+    sugar:ANSWER
+    fiber:ANSWER
+    iron:ANSWER
+    potassium:ANSWER
+    calcium:ANSWER
+    ''',
+  );
+
+  // Analyze the food by sending the Base64-encoded image
+  final result = await analyzer.analyzeFood(imageBase64);
+  print(result); // Print the result
 }
