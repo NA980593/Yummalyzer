@@ -4,6 +4,7 @@ import 'package:yummalyzer/food_data_manager.dart';
 import 'package:yummalyzer/services/food_analyzer.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+import 'package:yummalyzer/tracker_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key, required this.title});
@@ -56,6 +57,13 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  void _goToTrackerScreen() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => TrackerScreen(title: 'Tracker')),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,7 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           });
                         }
                         : null,
-                
+
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xff393E46),
                 ),
@@ -101,7 +109,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   'Yummalyze!',
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
-                
               ),
               SingleChildScrollView(
                 child: Column(
@@ -137,6 +144,20 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     ElevatedButton(
                       onPressed: () {
+                        _goToTrackerScreen();
+                      },
+
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xff393E46),
+                      ),
+
+                      child: Text(
+                        'Tracker',
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
                         updateMap({
                           'name': 'Alice',
                           'age': '30',
@@ -167,25 +188,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
                       child: Text(
                         'Save entry.',
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                    ),
-                    ElevatedButton(
-                      onPressed:
-                          _map.entries.isEmpty != true
-                              ? () {
-                                foodDataManager.loadAllEntries().then((entries) {
-                                  print(entries);
-                                });
-                              }
-                              : null,
-                      
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xff393E46),
-                      ),
-                      
-                      child: Text(
-                        'Load entry.',
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ),
