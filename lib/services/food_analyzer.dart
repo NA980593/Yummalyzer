@@ -64,6 +64,7 @@ Future<String> callGemini(dynamic imageInput) async {
     give me estimated information about the food in this picture in the following format so I can parse it with code. and do not put a space after the colon, do not put quotes, just put the answer itself right after the colon, nothing more. 
     PLEASE make sure the format is in key:value no spaces, no brackets, no commas, no quotes. Include in the notes section things such as possible allergens, if the item is either healthy, not healthy, or moderately healthy, if the item item is highly processed, 
     moderatly processed, or lightly/not processed, if there is a high sodium count, or if there is a high sugar count. If it is not healthy, suggest a similar but healthier alternative. You MUST include everything and not leave anything out no matter what, ESPECIALLY THE NOTES.
+    For the serving size ONLY say the number of items or grams, IF it is grams put the "g" after the value
 
     Name:ANSWER
     Calories:ANSWER
