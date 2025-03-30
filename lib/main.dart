@@ -108,7 +108,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       .toList(),
             ),
             ElevatedButton(
-              child: Text('Assign Another New Map'),
+              child: Text('Yummalyze!'),
               onPressed:
                   _selectedImage != null
                       ? () {
@@ -139,6 +139,16 @@ class _MyHomePageState extends State<MyHomePage> {
                       _getImageFromGallery();
                     },
                     child: Text('Get From Gallery'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      updateMap({
+                        'name': 'Alice',
+                        'age': '30',
+                        'city': 'New York',
+                      });
+                    },
+                    child: Text('Assign new map'),
                   ),
                 ],
               ),
