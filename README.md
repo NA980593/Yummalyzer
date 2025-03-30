@@ -1,5 +1,6 @@
 ![Yummalyzer](https://github.com/user-attachments/assets/8a40a7fc-501e-4d20-a6b8-b1c58dc1a7d2)
-[ProfHacks 2025 Project](https://devpost.com/software/yummalyzer-food-analyzer)
+
+## [ProfHacks 2025 Project](https://devpost.com/software/yummalyzer-food-analyzer)
 
 ---
 
