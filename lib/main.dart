@@ -15,7 +15,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Yummalyzer',
       theme: themes.themeyTitle,
-      darkTheme: themes.themeyButtons,
       home: const HomeScreen(title: 'Flutter Demo Home Page'),
     );
   }

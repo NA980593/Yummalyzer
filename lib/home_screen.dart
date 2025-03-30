@@ -83,7 +83,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         });
                       }
                       : null,
-              child: Text('Yummalyze!'),
+              child: Text(
+                'Yummalyze!',
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
             ),
             SingleChildScrollView(
               child: Column(
@@ -93,13 +96,19 @@ class _HomeScreenState extends State<HomeScreen> {
                     onPressed: () {
                       _getImageFromCamera();
                     },
-                    child: Text('Get From Camera'),
+                    child: Text(
+                      'Get From Camera',
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
                   ),
                   ElevatedButton(
                     onPressed: () {
                       _getImageFromGallery();
                     },
-                    child: Text('Get From Gallery'),
+                    child: Text(
+                      'Get From Gallery',
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
                   ),
                   ElevatedButton(
                     onPressed: () {
@@ -109,7 +118,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         'city': 'New York',
                       });
                     },
-                    child: Text('Assign new map'),
+                    child: Text(
+                      'Assign new map',
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
                   ),
                   ElevatedButton(
                     onPressed:
@@ -118,7 +130,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               foodDataManager.saveEntry(_map);
                             }
                             : null,
-                    child: Text('Save entry.'),
+                    child: Text(
+                      'Save entry.',
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
                   ),
                   ElevatedButton(
                     onPressed:
@@ -129,7 +144,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               });
                             }
                             : null,
-                    child: Text('Load entry.'),
+                    child: Text(
+                      'Load entry.',
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
                   ),
                 ],
               ),
